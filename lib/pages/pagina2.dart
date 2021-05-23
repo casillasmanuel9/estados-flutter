@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_estados/bloc/usuario/usuario_cubit.dart';
+import 'package:flutter_estados/models/usuario.dart';
+
+
 
 class Pagina2 extends StatelessWidget {
   const Pagina2({Key key}) : super(key: key);
 
+
   @override
   Widget build(BuildContext context) {
+    final cubitUsuario = context.read<UsuarioCubit>();
+
     return Scaffold(
         appBar: AppBar(
           title: Text('Pagina 2'),
@@ -13,9 +21,22 @@ class Pagina2 extends StatelessWidget {
             child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ButtonCustom(text: 'Establecer Usuario',onPress: (){},),
-            ButtonCustom(text: 'Establecer Edad',onPress: (){},),
-            ButtonCustom(text: 'Establecer Profeción',onPress: (){},)
+            ButtonCustom(text: 'Establecer Usuario',onPress: (){
+              cubitUsuario.seleccionarEstado(new Usuario(
+                edad: 24,
+                nombre: 'Manuel',
+                profesiones: [
+                  'Front end developer',
+                  'Back end developer'
+                ]
+              ));
+            },),
+            ButtonCustom(text: 'Establecer Edad',onPress: (){
+              cubitUsuario.cambiarEdad(20);
+            },),
+            ButtonCustom(text: 'Establecer Profeción',onPress: (){
+              cubitUsuario.agregarProfecciones();
+            },)
           ],
         )));
   }
